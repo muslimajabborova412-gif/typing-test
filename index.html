@@ -2,49 +2,27 @@
 <html lang="tg">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Санҷиши Суръати Чопкунӣ</title>
+    <title>TypingTest</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="logo">TypingTest</div>
-        
-        <!-- Интихоби забонҳо мисли 10FastFingers -->
-        <div class="language-selector">
-            <select id="lang-select">
-                <option value="ru">Русский (russian)</option>
-                <option value="tg">Тоҷикӣ (tajik)</option>
-                <option value="en">English (english)</option>
-            </select>
-        </div>
+<div class="controls-bar">
+    <select id="lang-select">
+        <option value="ru">Русский (russian)</option>
+        <option value="tg">Тоҷикӣ (tajik)</option>
+        <option value="en">English (english)</option>
+    </select>
+    <div>Normal | Advanced | <span id="time">60</span>с | 🔄 | ⚙️</div>
+</div>
 
-        <div class="auth-buttons">
-            <button id="login-btn">Ворид шудан</button>
-            <button class="btn-register" id="register-btn">Сабти ном</button>
-        </div>
-    </header>
+<div class="container">
+    <div id="user-greeting"></div>
+    <div class="word-display" id="word-display"></div>
+    <input type="text" id="word-input" placeholder="Барои оғоз нависед..." disabled autocomplete="off">
+    <button id="start-btn">Оғози бозӣ</button>
+</div>
 
-    <div class="container">
-        <h1>Санҷиши Суръати Чопкунӣ</h1>
-        <div id="user-greeting" style="color: #38bdf8; margin-bottom: 10px; font-weight: bold;"></div>
-        <div id="timer">Вақт: <span id="time">60</span> с</div>
-
-        <div class="word-display" id="word-display">
-            <!-- Калимаҳо дар ин ҷо бо тартиби тасодуфӣ пайдо мешаванд -->
-        </div>
-
-        <input type="text" id="word-input" placeholder="Барои оғоз калимаро нависед..." disabled autocomplete="off">
-        
-        <button id="start-btn">Оғози бозӣ</button>
-
-        <div id="result-container" style="display: none; margin-top: 20px;">
-            <h3>Натиҷаи шумо:</h3>
-            <p id="final-score" style="font-size: 20px; color: #38bdf8;"></p>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
