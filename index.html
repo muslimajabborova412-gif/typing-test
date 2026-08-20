@@ -3,39 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Олимпиадаи Тезнависӣ</title>
+    <title>Санҷиши Суръати Чопкунӣ</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Панели болоӣ (Шапка) мисли сайтҳои касбӣ -->
     <header class="navbar">
-        <div class="logo">⚡ FastOlimp</div>
-        <nav>
-            <a href="#" class="active">Асосӣ</a>
-            <a href="#">🏆 Олимпиадаи пулӣ</a>
-            <a href="#">Рейтинг</a>
-        </nav>
+        <div class="logo">TypingTest</div>
+        
+        <!-- Интихоби забонҳо мисли 10FastFingers -->
+        <div class="language-selector">
+            <select id="lang-select">
+                <option value="ru">Русский (russian)</option>
+                <option value="tg">Тоҷикӣ (tajik)</option>
+                <option value="en">English (english)</option>
+            </select>
+        </div>
+
         <div class="auth-buttons">
-            <button class="btn-login">Ворид шудан</button>
-            <button class="btn-register">Сабти ном</button>
+            <button id="login-btn">Ворид шудан</button>
+            <button class="btn-register" id="register-btn">Сабти ном</button>
         </div>
     </header>
 
-    <!-- Қисми асосии бозӣ -->
     <div class="container">
         <h1>Санҷиши Суръати Чопкунӣ</h1>
+        <div id="user-greeting" style="color: #38bdf8; margin-bottom: 10px; font-weight: bold;"></div>
         <div id="timer">Вақт: <span id="time">60</span> с</div>
+
+        <div class="word-display" id="word-display">
+            <!-- Калимаҳо дар ин ҷо бо тартиби тасодуфӣ пайдо мешаванд -->
+        </div>
+
+        <input type="text" id="word-input" placeholder="Барои оғоз калимаро нависед..." disabled autocomplete="off">
         
-        <div id="word-display" class="word-display">Барои оғоз тугмаи поёнро пахш кунед</div>
-        
-        <input type="text" id="word-input" placeholder="Калимаро инҷо нависед ва Space-ро пахш кунед..." disabled>
-        
-        <button id="start-btn">Оғоз кардан</button>
-        
-        <div id="result-container" class="result-container" style="display: none;">
-            <h2>Санҷиш ба охир расид!</h2>
-            <p id="final-score" style="font-size: 20px; font-weight: bold; color: #27ae60;"></p>
+        <button id="start-btn">Оғози бозӣ</button>
+
+        <div id="result-container" style="display: none; margin-top: 20px;">
+            <h3>Натиҷаи шумо:</h3>
+            <p id="final-score" style="font-size: 20px; color: #38bdf8;"></p>
         </div>
     </div>
 
