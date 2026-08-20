@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Олимпиадаи Тезнависӣ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Панели болоӣ (Шапка) мисли сайтҳои касбӣ -->
+    <header class="navbar">
+        <div class="logo">⚡ FastOlimp</div>
+        <nav>
+            <a href="#" class="active">Асосӣ</a>
+            <a href="#">🏆 Олимпиадаи пулӣ</a>
+            <a href="#">Рейтинг</a>
+        </nav>
+        <div class="auth-buttons">
+            <button class="btn-login">Ворид шудан</button>
+            <button class="btn-register">Сабти ном</button>
+        </div>
+    </header>
+
+    <!-- Қисми асосии бозӣ -->
+    <div class="container">
+        <h1>Санҷиши Суръати Чопкунӣ</h1>
+        <div id="timer">Вақт: <span id="time">60</span> с</div>
+        
+        <div id="word-display" class="word-display">Барои оғоз тугмаи поёнро пахш кунед</div>
+        
+        <input type="text" id="word-input" placeholder="Калимаро инҷо нависед ва Space-ро пахш кунед..." disabled>
+        
+        <button id="start-btn">Оғоз кардан</button>
+        
+        <div id="result-container" class="result-container" style="display: none;">
+            <h2>Санҷиш ба охир расид!</h2>
+            <p id="final-score" style="font-size: 20px; font-weight: bold; color: #27ae60;"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
