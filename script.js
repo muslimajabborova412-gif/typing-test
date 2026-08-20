@@ -1,8 +1,21 @@
-const words = [
-    "лицо", "ребенок", "самый", "казаться", "любить", "почему", "у", "вода", "бы", "жена",
-    "страна", "дверь", "ничто", "очень", "свое", "даже", "почему", "год", "значить", "при",
-    "время", "человек", "дело", "жизнь", "день", "рука", "работа", "слово", "лицо", "место"
-];
+// Луғати калимаҳо барои се забон
+const wordsData = {
+    tg: [
+        "китоб", "мактаб", "барнома", "хона", "мошин", "дунё", "вақт", "кор", "дарс", "хонанда",
+        "дониш", "компютер", "забон", "тез", "навиштан", "суръат", "ҷаҳон", "олам", "ҷвон", "дӯст"
+    ],
+    ru: [
+        "лицо", "ребенок", "самый", "казаться", "любить", "почему", "у", "вода", "бы", "жена",
+        "страна", "дверь", "ничто", "очень", "свое", "даже", "почему", "год", "значить", "при"
+    ],
+    en: [
+        "time", "person", "year", "way", "day", "thing", "man", "world", "life", "hand",
+        "part", "child", "eye", "woman", "place", "work", "week", "case", "point", "government"
+    ]
+};
+
+let currentLang = 'ru'; // Забони пешфарз
+let words = wordsData[currentLang];
 
 let timeLeft = 60;
 let timerInterval = null;
@@ -18,6 +31,7 @@ const startBtn = document.getElementById('start-btn');
 const resultContainer = document.getElementById('result-container');
 const finalScore = document.getElementById('final-score');
 
+// Илова кардани тугмаҳои ивазкунии забон агар мавҷуд бошанд, ё кор бо клик
 startBtn.addEventListener('click', startGame);
 
 function startGame() {
@@ -38,7 +52,7 @@ function startGame() {
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         timeLeft--;
-        timeDisplay.textContent = timeLeft;
+        if(timeDisplay) timeDisplay.textContent = timeLeft;
         
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
@@ -65,11 +79,10 @@ wordInput.addEventListener('input', () => {
     const typedValue = wordInput.value;
     const currentWord = words[currentWordIndex];
 
-    // Агар корбар Space пахш кунад (калима тамом шуд)
     if (typedValue.endsWith(' ')) {
         const cleanTyped = typedValue.trim();
-        
         const wordSpans = wordDisplay.children;
+        
         if (cleanTyped === currentWord) {
             wordSpans[currentWordIndex].classList.add('correct');
             correctWordsCount++;
@@ -86,7 +99,6 @@ wordInput.addEventListener('input', () => {
             return;
         }
 
-        // Кӯчонидани ҳолати "current" ба калимаи навбатӣ
         for (let i = 0; i < wordSpans.length; i++) {
             wordSpans[i].classList.remove('current');
         }
