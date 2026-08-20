@@ -9,7 +9,6 @@ body {
     height: 100vh;
 }
 
-/* Панели болоӣ */
 .navbar {
     width: 100%;
     display: flex;
@@ -32,7 +31,6 @@ body {
     text-decoration: none;
     margin: 0 15px;
     font-weight: 600;
-    transition: color 0.3s;
 }
 
 .navbar nav a:hover, .navbar nav a.active {
@@ -48,7 +46,6 @@ body {
     cursor: pointer;
     font-weight: bold;
     margin-left: 10px;
-    transition: all 0.3s;
 }
 
 .auth-buttons .btn-register {
@@ -56,19 +53,14 @@ body {
     color: #0f172a;
 }
 
-.auth-buttons button:hover {
-    opacity: 0.8;
-}
-
-/* Қисми марказии бозӣ */
 .container {
     background: #1e293b;
     padding: 40px;
     border-radius: 16px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     text-align: center;
-    width: 650px;
-    margin-top: 50px;
+    width: 700px;
+    margin-top: 40px;
 }
 
 h1 {
@@ -83,18 +75,43 @@ h1 {
     font-weight: bold;
 }
 
+/* Қисми намоиши калимаҳо мисли 10FastFingers */
 .word-display {
-    font-size: 20px;
-    margin-bottom: 20px;
-    padding: 20px;
+    font-size: 22px;
+    margin-bottom: 25px;
+    padding: 25px;
     background: #0f172a;
     border: 1px solid #334155;
     border-radius: 8px;
-    color: #e2e8f0;
+    color: #94a3b8;
     text-align: left;
-    line-height: 1.8;
-    height: 80px;
+    line-height: 2;
+    height: 100px;
     overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Ҳолати калимаҳо */
+.word-display span {
+    padding: 0 4px;
+    border-radius: 4px;
+}
+
+.word-display span.current {
+    background-color: #facc15; /* Зард барои калимаи фаъол */
+    color: #0f172a;
+    font-weight: bold;
+}
+
+.word-display span.correct {
+    color: #22c55e; /* Сабз агар дуруст бошад */
+}
+
+.word-display span.incorrect {
+    color: #ef4444; /* Сурх агар хато бошад */
+    background-color: rgba(239, 68, 68, 0.2);
 }
 
 input[type="text"] {
@@ -123,13 +140,8 @@ button#start-btn {
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    transition: background 0.3s;
 }
 
 button#start-btn:hover {
     background-color: #0ea5e9;
-}
-
-.result-container {
-    margin-top: 20px;
 }
