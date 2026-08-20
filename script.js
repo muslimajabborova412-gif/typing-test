@@ -54,6 +54,7 @@ function generateWords() {
     for (let i = 0; i < 500; i++) {
         words.push(base[Math.floor(Math.random() * base.length)]);
     }
+    currentWordIndex = 0;
     renderWords();
 }
 
@@ -64,6 +65,7 @@ function renderWords() {
         span.textContent = w + " ";
         if (i === currentWordIndex) {
             span.classList.add('current');
+            // Авто-скролл ба калимаи фаъол
             span.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         wordDisplay.appendChild(span);
@@ -89,7 +91,6 @@ function toggleTime() {
     document.getElementById('time-toggle').textContent = timeLimit + "с";
 }
 
-// Функсияи пурра ва фаъоли тугмаи Рестарт (🔄)
 function restartGame() {
     clearInterval(timerInterval);
     timerInterval = null;
@@ -101,24 +102,11 @@ function restartGame() {
     timeDisplay.textContent = timeLeft;
     
     wordInput.value = '';
-    wordInput.disabled = false;
-    wordInput.focus();
-    
-    if(startBtn) startBtn.style.display = 'none';
+    wordInput.disabled = true;
+    startBtn.style.display = 'inline-block';
     if(resultContainer) resultContainer.style.display = 'none';
     
     generateWords();
-
-    // Бозиро аз нав бо таймер фаъол мекунем
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        timeDisplay.textContent = timeLeft;
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            endGame();
-        }
-    }, 1000);
-    isPlaying = true;
 }
 
 function openSettings() {
@@ -165,23 +153,27 @@ function startDuel() {
     startGame();
 }
 
+// Санҷиши калимаҳо ҳангоми пахш кардани Space
 wordInput.addEventListener('input', (e) => {
     if (!isPlaying) return;
 
+    // Вақте ки корбар Space (фосила) мезанад
     if (e.target.value.endsWith(' ')) {
         const typed = e.target.value.trim();
         const spans = wordDisplay.children;
         
-        if (typed === words[currentWordIndex]) {
-            spans[currentWordIndex].classList.add('correct');
-            correctCount++;
-        } else {
-            spans[currentWordIndex].classList.add('incorrect');
-            incorrectCount++;
+        if (spans[currentWordIndex]) {
+            if (typed === words[currentWordIndex]) {
+                spans[currentWordIndex].classList.add('correct');
+                correctCount++;
+            } else {
+                spans[currentWordIndex].classList.add('incorrect'); // Ранги сурх ва پس-زمینه
+                incorrectCount++;
+            }
         }
 
         currentWordIndex++;
-        e.target.value = '';
+        e.target.value = ''; // Тоза кардани input барои калимаи навбатӣ
         
         if (currentWordIndex >= words.length) {
             clearInterval(timerInterval);
@@ -189,7 +181,7 @@ wordInput.addEventListener('input', (e) => {
             return;
         }
         
-        renderWords();
+        renderWords(); // Навсозии экран ва скролл ба калимаи нав
     }
 });
 
