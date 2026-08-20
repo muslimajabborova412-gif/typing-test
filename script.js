@@ -23,16 +23,15 @@ const finalScore = document.getElementById('final-score');
 const userGreeting = document.getElementById('user-greeting');
 const authBtn = document.getElementById('auth-action-btn');
 
-// Тафтиши бақайдгирӣ дар хотираи браузер
 window.addEventListener('DOMContentLoaded', () => {
     const user = localStorage.getItem('typing_user');
     if (user) {
         userGreeting.textContent = `Истифодабаранда: ${user}`;
         authBtn.textContent = 'Баромадан';
     }
+    generateWords();
 });
 
-// Функсияи Бақайдгирӣ ва Воридшавӣ
 function handleAuth() {
     const user = localStorage.getItem('typing_user');
     if (user) {
@@ -49,7 +48,6 @@ function handleAuth() {
     }
 }
 
-// Генерацияи 500 калимаи рандом
 function generateWords() {
     words = [];
     const base = wordsData[currentLang];
@@ -91,18 +89,36 @@ function toggleTime() {
     document.getElementById('time-toggle').textContent = timeLimit + "с";
 }
 
+// Функсияи пурра ва фаъоли тугмаи Рестарт (🔄)
 function restartGame() {
     clearInterval(timerInterval);
+    timerInterval = null;
     isPlaying = false;
     currentWordIndex = 0;
     correctCount = 0;
     incorrectCount = 0;
+    timeLeft = timeLimit;
+    timeDisplay.textContent = timeLeft;
+    
     wordInput.value = '';
-    wordInput.disabled = true;
-    startBtn.style.display = 'inline-block';
+    wordInput.disabled = false;
+    wordInput.focus();
+    
+    if(startBtn) startBtn.style.display = 'none';
     if(resultContainer) resultContainer.style.display = 'none';
+    
     generateWords();
-    timeDisplay.textContent = timeLimit;
+
+    // Бозиро аз нав бо таймер фаъол мекунем
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timeDisplay.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            endGame();
+        }
+    }, 1000);
+    isPlaying = true;
 }
 
 function openSettings() {
@@ -144,9 +160,8 @@ function startGame() {
     }, 1000);
 }
 
-// Дуэл миёни ду кас (Муқоисаи автоматикии натиҷаҳо)
 function startDuel() {
-    alert("Режими дуэл фаъол шуд! Бозигари якум бозӣ мекунад, баъд бозигари дуюм. Натиҷаҳо муқоиса мешаванд.");
+    alert("Режими дуэл фаъол шуд! Бозигари якум бозӣ мекунад.");
     startGame();
 }
 
@@ -184,7 +199,5 @@ function endGame() {
     startBtn.style.display = 'inline-block';
     
     resultContainer.style.display = 'block';
-    finalScore.textContent = `Дуруст: ${correctWordsCount || correctCount} калима | Хато: ${incorrectCount} | Суръат дар дақиқа: ${correctWordsCount || correctCount} WPM`;
+    finalScore.textContent = `Дуруст: ${correctCount} калима | Хато: ${incorrectCount} | Суръат: ${correctCount} WPM`;
 }
-
-generateWords();
