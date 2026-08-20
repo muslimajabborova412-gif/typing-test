@@ -1,15 +1,15 @@
 const words = [
-    "барномасозӣ", "компютер", "технология", "суръат", "ҷаҳон", 
-    "дониш", "навоварӣ", "пайваст", "вебсайт", "хона", 
-    "донишгоҳ", "китоб", "талаба", "омӯзгор", "математика", 
-    "интернет", "телефон", "шабака", "дастур", "мошина"
+    "лицо", "ребенок", "самый", "казаться", "любить", "почему", "у", "вода", "бы", "жена",
+    "страна", "дверь", "ничто", "очень", "свое", "даже", "почему", "год", "значить", "при",
+    "время", "человек", "дело", "жизнь", "день", "рука", "работа", "слово", "лицо", "место"
 ];
 
 let timeLeft = 60;
 let timerInterval = null;
 let isPlaying = false;
-let correctWordsCount = 0;
 let currentWordIndex = 0;
+let correctWordsCount = 0;
+let incorrectWordsCount = 0;
 
 const wordDisplay = document.getElementById('word-display');
 const wordInput = document.getElementById('word-input');
@@ -23,13 +23,14 @@ startBtn.addEventListener('click', startGame);
 function startGame() {
     isPlaying = true;
     timeLeft = 60;
-    correctWordsCount = 0;
     currentWordIndex = 0;
+    correctWordsCount = 0;
+    incorrectWordsCount = 0;
     
     wordInput.value = '';
     wordInput.disabled = false;
     wordInput.focus();
-    resultContainer.style.display = 'none';
+    if(resultContainer) resultContainer.style.display = 'none';
     startBtn.style.display = 'none';
     
     renderWords();
@@ -46,39 +47,52 @@ function startGame() {
     }, 1000);
 }
 
-// Намоиш додани қатори калимаҳо мисли 10FastFingers
 function renderWords() {
     wordDisplay.innerHTML = '';
-    for (let i = 0; i < words.length; i++) {
+    words.forEach((word, index) => {
         const span = document.createElement('span');
-        span.textContent = words[i] + ' ';
-        if (i === currentWordIndex) {
-            span.style.backgroundColor = '#f1c40f'; // Калимаи фаъол зард мешавад
-            span.style.padding = '2px 4px';
-            span.style.borderRadius = '4px';
+        span.textContent = word;
+        if (index === currentWordIndex) {
+            span.classList.add('current');
         }
         wordDisplay.appendChild(span);
-    }
+    });
 }
 
 wordInput.addEventListener('input', () => {
     if (!isPlaying) return;
 
-    let typedValue = wordInput.value.trim();
-    
-    // Агар корбар Space-ро пахш кунад (калима тамом шуд)
-    if (wordInput.value.endsWith(' ')) {
-        if (typedValue === words[currentWordIndex]) {
+    const typedValue = wordInput.value;
+    const currentWord = words[currentWordIndex];
+
+    // Агар корбар Space пахш кунад (калима тамом шуд)
+    if (typedValue.endsWith(' ')) {
+        const cleanTyped = typedValue.trim();
+        
+        const wordSpans = wordDisplay.children;
+        if (cleanTyped === currentWord) {
+            wordSpans[currentWordIndex].classList.add('correct');
             correctWordsCount++;
+        } else {
+            wordSpans[currentWordIndex].classList.add('incorrect');
+            incorrectWordsCount++;
         }
+
         currentWordIndex++;
         wordInput.value = '';
-        
+
         if (currentWordIndex >= words.length) {
             stopGame();
             return;
         }
-        renderWords();
+
+        // Кӯчонидани ҳолати "current" ба калимаи навбатӣ
+        for (let i = 0; i < wordSpans.length; i++) {
+            wordSpans[i].classList.remove('current');
+        }
+        if (wordSpans[currentWordIndex]) {
+            wordSpans[currentWordIndex].classList.add('current');
+        }
     }
 });
 
@@ -88,7 +102,8 @@ function stopGame() {
     startBtn.style.display = 'inline-block';
     startBtn.textContent = "Аз нав бозӣ кардан";
     
-    // Нишон додани натиҷа дар охир
-    resultContainer.style.display = 'block';
-    finalScore.textContent = `Шумо ${correctWordsCount} калимаро дуруст навиштед! (${correctWordsCount} калима дар 1 дақиқа)`;
+    if (resultContainer) {
+        resultContainer.style.display = 'block';
+        finalScore.textContent = `Дуруст: ${correctWordsCount} | Хато: ${incorrectWordsCount} | Ҳамагӣ: ${correctWordsCount + incorrectWordsCount}`;
+    }
 }
