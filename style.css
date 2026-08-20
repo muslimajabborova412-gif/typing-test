@@ -1,132 +1,74 @@
-body {
-    font-family: "Courier New", Courier, monospace;
-    background-color: #eaf4fb;
-    color: #333;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFingers - Олимпиадаи Суръат</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-.controls-bar {
-    width: 800px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    font-size: 14px;
-}
+<!-- Менюи болоӣ монанди 10fastfingers -->
+<div class="top-nav">
+    <div class="nav-left">
+        <span class="logo-text">⌨️ FASTFINGERS</span>
+        <span class="online-users">👥 1738</span>
+    </div>
+    <div class="nav-right">
+        <button class="nav-btn active">Test</button>
+        <button class="nav-btn">Games</button>
+        <button class="icon-btn">🎨</button>
+        <button class="icon-btn">🌐</button>
+        <span id="user-display" style="margin-left: 15px; font-weight: bold; color: #2980b9;">Абдурахим</span>
+        <button onclick="handleAuth()" id="auth-btn" style="margin-left: 10px; background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Баромадан</button>
+    </div>
+</div>
 
-.controls-bar button {
-    background: none;
-    border: none;
-    color: #2980b9;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 14px;
-}
+<div class="controls-bar">
+    <div class="left-controls">
+        <select id="lang-select">
+            <option value="ru">Русский (russian)</option>
+            <option value="tg">Тоҷикӣ (tajik)</option>
+            <option value="en">English (english)</option>
+        </select>
+    </div>
+    <div class="right-controls">
+        <button onclick="setMode('normal')">Normal</button> | 
+        <button onclick="setMode('advanced')">Advanced</button> | 
+        <span id="time-display-bar">00:60</span> | 
+        <button id="restart-btn" onclick="restartGame()" title="Аз нав">🔄</button> | 
+        <button onclick="openSettings()" title="Танзимот">⚙️</button>
+    </div>
+</div>
 
-.controls-bar button:hover {
-    text-decoration: underline;
-}
+<div class="container">
+    <div id="timer">Вақт: <span id="time">60</span>с</div>
 
-/* Дизайни махсуси тугмаи рестарт (кабуд ва чоркунҷа) */
-#restart-btn {
-    background-color: #0078D7;
-    color: white;
-    border: 1px solid #005a9e;
-    border-radius: 4px;
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: background-color 0.2s;
-    text-decoration: none !important;
-}
+    <!-- Майдони намоиши калимаҳо -->
+    <div class="word-display" id="word-display"></div>
 
-#restart-btn:hover {
-    background-color: #005a9e;
-}
+    <!-- Қуттии навиштан -->
+    <input type="text" id="word-input" placeholder="Барои оғоз ин ҷо нависед..." disabled autocomplete="off">
+    
+    <div class="buttons-area">
+        <button id="start-btn" onclick="startGame()">Оғози бозӣ</button>
+        <button id="duel-btn" onclick="startDuel()" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px;">Рақобат (Дуэл бо дӯст)</button>
+    </div>
 
-.container {
-    width: 800px;
-    background: transparent;
-}
+    <!-- Қисми натиҷаҳо ва омор (Мисли расмҳои охир) -->
+    <div id="result-container" style="display: none; margin-top: 30px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <h3 style="color: #6c5ce7; border-bottom: 2px solid #f1f2f6; padding-bottom: 10px;">Натиҷаи санҷиши суръат</h3>
+        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
+            <div><strong>Сл/мин (WPM):</strong> <span id="res-wpm">0</span></div>
+            <div><strong>Дурустӣ:</strong> <span id="res-accuracy">0%</span></div>
+            <div><strong>Калимаҳои дуруст:</strong> <span id="res-correct">0</span></div>
+            <div><strong>Калимаҳои хато:</strong> <span id="res-incorrect">0</span></div>
+            <div><strong>Ҳарфҳои нодуруст:</strong> <span id="res-wrong-chars">0</span></div>
+            <div><strong>Вақти сарфшуда:</strong> <span id="res-time">60 сония</span></div>
+        </div>
+    </div>
+</div>
 
-.user-panel {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    background: #d9edf7;
-    padding: 10px 15px;
-    border-radius: 6px;
-}
-
-.user-panel button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#timer {
-    font-size: 20px;
-    color: #c0392b;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.word-display {
-    width: 100%;
-    height: 140px;
-    font-size: 26px;
-    line-height: 2;
-    background-color: #eaf4fb;
-    padding: 15px;
-    overflow-y: auto;
-    border-bottom: 2px solid #cce4f2;
-    margin-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    gap: 10px;
-    box-sizing: border-box;
-}
-
-.word-display span.current {
-    background-color: #fce862;
-    padding: 0 4px;
-    border-radius: 3px;
-}
-
-.word-display span.correct { color: #27ae60; }
-.word-display span.incorrect { color: #c0392b; background-color: #fadbd8; }
-
-#word-input {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 15px;
-}
-
-#start-btn {
-    background-color: #2980b9;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-}
+<script src="script.js"></script>
+</body>
+</html>
