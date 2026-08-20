@@ -1,74 +1,171 @@
-<!DOCTYPE html>
-<html lang="tg">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FastFingers - Олимпиадаи Суръат</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eef5f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-<!-- Менюи болоӣ монанди 10fastfingers -->
-<div class="top-nav">
-    <div class="nav-left">
-        <span class="logo-text">⌨️ FASTFINGERS</span>
-        <span class="online-users">👥 1738</span>
-    </div>
-    <div class="nav-right">
-        <button class="nav-btn active">Test</button>
-        <button class="nav-btn">Games</button>
-        <button class="icon-btn">🎨</button>
-        <button class="icon-btn">🌐</button>
-        <span id="user-display" style="margin-left: 15px; font-weight: bold; color: #2980b9;">Абдурахим</span>
-        <button onclick="handleAuth()" id="auth-btn" style="margin-left: 10px; background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Баромадан</button>
-    </div>
-</div>
+/* Менюи болоӣ */
+.top-nav {
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
 
-<div class="controls-bar">
-    <div class="left-controls">
-        <select id="lang-select">
-            <option value="ru">Русский (russian)</option>
-            <option value="tg">Тоҷикӣ (tajik)</option>
-            <option value="en">English (english)</option>
-        </select>
-    </div>
-    <div class="right-controls">
-        <button onclick="setMode('normal')">Normal</button> | 
-        <button onclick="setMode('advanced')">Advanced</button> | 
-        <span id="time-display-bar">00:60</span> | 
-        <button id="restart-btn" onclick="restartGame()" title="Аз нав">🔄</button> | 
-        <button onclick="openSettings()" title="Танзимот">⚙️</button>
-    </div>
-</div>
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
-<div class="container">
-    <div id="timer">Вақт: <span id="time">60</span>с</div>
+.logo-text {
+    font-weight: bold;
+    color: #6c5ce7;
+    font-size: 18px;
+}
 
-    <!-- Майдони намоиши калимаҳо -->
-    <div class="word-display" id="word-display"></div>
+.online-users {
+    color: #666;
+    font-size: 14px;
+}
 
-    <!-- Қуттии навиштан -->
-    <input type="text" id="word-input" placeholder="Барои оғоз ин ҷо нависед..." disabled autocomplete="off">
-    
-    <div class="buttons-area">
-        <button id="start-btn" onclick="startGame()">Оғози бозӣ</button>
-        <button id="duel-btn" onclick="startDuel()" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px;">Рақобат (Дуэл бо дӯст)</button>
-    </div>
+.nav-btn {
+    background: transparent;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #555;
+}
 
-    <!-- Қисми натиҷаҳо ва омор (Мисли расмҳои охир) -->
-    <div id="result-container" style="display: none; margin-top: 30px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-        <h3 style="color: #6c5ce7; border-bottom: 2px solid #f1f2f6; padding-bottom: 10px;">Натиҷаи санҷиши суръат</h3>
-        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
-            <div><strong>Сл/мин (WPM):</strong> <span id="res-wpm">0</span></div>
-            <div><strong>Дурустӣ:</strong> <span id="res-accuracy">0%</span></div>
-            <div><strong>Калимаҳои дуруст:</strong> <span id="res-correct">0</span></div>
-            <div><strong>Калимаҳои хато:</strong> <span id="res-incorrect">0</span></div>
-            <div><strong>Ҳарфҳои нодуруст:</strong> <span id="res-wrong-chars">0</span></div>
-            <div><strong>Вақти сарфшуда:</strong> <span id="res-time">60 сония</span></div>
-        </div>
-    </div>
-</div>
+.nav-btn.active {
+    background-color: #6c5ce7;
+    color: white;
+}
 
-<script src="script.js"></script>
-</body>
-</html>
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.controls-bar {
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.controls-bar button {
+    background: none;
+    border: none;
+    color: #2980b9;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+#restart-btn {
+    background-color: #6c5ce7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 800px;
+}
+
+#timer {
+    font-size: 18px;
+    color: #c0392b;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Дизайни экрани калимаҳо ва рангубор мисли 10fastfingers */
+.word-display {
+    width: 100%;
+    height: 150px;
+    font-size: 24px;
+    line-height: 2.2;
+    background-color: #ffffff;
+    padding: 20px;
+    overflow-y: auto;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 12px;
+    box-sizing: border-box;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* Калимаи ҳозира (зардча / cursor) */
+.word-display span.current {
+    background-color: #f1c40f;
+    color: #2c3e50;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* Калимаи хато кардашуда (Заминаи сурх, ранги сафед - мисли расми 2) */
+.word-display span.incorrect {
+    background-color: #e74c3c !important;
+    color: white !important;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* Калимаи дуруст навишташуда */
+.word-display span.correct {
+    color: #27ae60;
+}
+
+#word-input {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+#word-input:focus {
+    border-color: #6c5ce7;
+}
+
+#start-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
