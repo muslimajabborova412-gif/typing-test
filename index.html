@@ -3,12 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TypingTest - Олимпиадаи Суръат</title>
+    <title>FastOlimpy - Санҷиши суръати навиштан</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="controls-bar">
+<!-- Менюи болоӣ бо номи сайри FastOlimpy ва номи шумо -->
+<div class="top-nav">
+    <div class="nav-left">
+        <span class="logo-text">⌨️ FastOlimpy</span>
+        <span class="online-users">👥 1738</span>
+    </div>
+    <div class="nav-right">
+        <button class="nav-btn active" onclick="switchTab('test')">Test</button>
+        <button class="nav-btn" onclick="switchTab('about')">Маълумот</button>
+        <button class="icon-btn">🎨</button>
+        <span id="user-display" style="margin-left: 15px; font-weight: bold; color: #6c5ce7;">Шералиев Абдураҳим</span>
+        <button onclick="handleAuth()" id="auth-btn" style="margin-left: 10px; background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Баромадан</button>
+    </div>
+</div>
+
+<div class="controls-bar" id="controls-bar">
     <div class="left-controls">
         <select id="lang-select">
             <option value="ru">Русский (russian)</option>
@@ -19,32 +34,63 @@
     <div class="right-controls">
         <button onclick="setMode('normal')">Normal</button> | 
         <button onclick="setMode('advanced')">Advanced</button> | 
-        <button id="time-toggle" onclick="toggleTime()">60с</button> | 
-        <button id="restart-btn" onclick="restartGame()" title="Аз нав оғоз кардан">🔄</button> | 
+        <span id="time-display-bar">00:60</span> | 
+        <button id="restart-btn" onclick="restartGame()" title="Аз нав">🔄</button> | 
         <button onclick="openSettings()" title="Танзимот">⚙️</button>
     </div>
 </div>
 
 <div class="container">
-    <div class="user-panel">
-        <span id="user-greeting">Хуш омадед!</span>
-        <button id="auth-action-btn" onclick="handleAuth()">Сабти ном / Ворид шудан</button>
+    <!-- Бахши асосии тест -->
+    <div id="test-section">
+        <div id="timer">Вақт: <span id="time">60</span>с</div>
+
+        <!-- Майдони намоиши калимаҳо -->
+        <div class="word-display" id="word-display"></div>
+
+        <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+            <!-- Қуттии навиштан -->
+            <input type="text" id="word-input" placeholder="Барои оғоз ин ҷо нависед..." disabled autocomplete="off" style="flex: 1; margin-bottom: 0;">
+            
+            <!-- Ба ҷои расм - Блоки нишондиҳандаи суръат (WPM / Суръат) -->
+            <div class="speed-badge-box" id="speed-badge-box">
+                <span class="speed-title">СУРЪАТ</span>
+                <span id="live-wpm" class="speed-value">0</span>
+                <span class="speed-unit">сл/мин</span>
+            </div>
+        </div>
+        
+        <div class="buttons-area">
+            <button id="start-btn" onclick="startGame()">Оғози бозӣ</button>
+            <button id="duel-btn" onclick="startDuel()" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px;">Рақобат (Дуэл бо дӯст)</button>
+        </div>
+
+        <!-- Натиҷаҳо -->
+        <div id="result-container" style="display: none; margin-top: 30px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <h3 style="color: #6c5ce7; border-bottom: 2px solid #f1f2f6; padding-bottom: 10px;">Натиҷаи санҷиши суръат - FastOlimpy</h3>
+            <div class="stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
+                <div><strong>Сл/мин (WPM):</strong> <span id="res-wpm">0</span></div>
+                <div><strong>Дурустӣ:</strong> <span id="res-accuracy">0%</span></div>
+                <div><strong>Калимаҳои дуруст:</strong> <span id="res-correct">0</span></div>
+                <div><strong>Калимаҳои хато:</strong> <span id="res-incorrect">0</span></div>
+                <div><strong>Ҳарфҳои нодуруст:</strong> <span id="res-wrong-chars">0</span></div>
+                <div><strong>Вақти сарфшуда:</strong> <span id="res-time">60 сония</span></div>
+            </div>
+        </div>
     </div>
 
-    <div id="timer">Вақт: <span id="time">60</span>с</div>
-
-    <div class="word-display" id="word-display"></div>
-
-    <input type="text" id="word-input" placeholder="Барои оғоз ин ҷо нависед..." disabled autocomplete="off">
-    
-    <div class="buttons-area">
-        <button id="start-btn" onclick="startGame()">Оғози бозӣ</button>
-        <button id="duel-btn" onclick="startDuel()" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px;">Рақобат (Дуэл бо дӯст)</button>
-    </div>
-
-    <div id="result-container" style="display: none; margin-top: 20px;">
-        <h3>Натиҷаи шумо:</h3>
-        <p id="final-score" style="font-size: 18px; color: #2c3e50;"></p>
+    <!-- Бахши Маълумот дар бораи сайт -->
+    <div id="about-section" style="display: none; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <h2 style="color: #6c5ce7; margin-top: 0;">Дар бораи лоиҳаи FastOlimpy</h2>
+        <p><strong>FastOlimpy</strong> як платформаи муосир ва интерактивӣ барои санҷиш ва инкишофи суръати босуръати навиштан дар клавиатура мебошад.</p>
+        <p>Ин лоиҳа аз ҷониби барномасоз <strong>Шералиев Абдураҳим</strong> сохта шудааст, то ба корбарон дар беҳтар кардани малакаи чопкунӣ бо забонҳои гуногун кӯмак расонад.</p>
+        <h3>Хусусиятҳои асосӣ:</h3>
+        <ul>
+            <li>Санҷиши суръат дар муддати 60 сония.</li>
+            <li>Нишон додани хатогиҳо бо ранги сурх ва калимаҳои дуруст.</li>
+            <li>Дастгирии забонҳои русӣ, тоҷикӣ ва англисӣ.</li>
+            <li>Омори муфассали натиҷаҳо пас аз анҷоми тест.</li>
+        </ul>
     </div>
 </div>
 
