@@ -31,6 +31,28 @@ body {
     text-decoration: underline;
 }
 
+/* Дизайни махсуси тугмаи рестарт (кабуд ва чоркунҷа) */
+#restart-btn {
+    background-color: #0078D7;
+    color: white;
+    border: 1px solid #005a9e;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background-color 0.2s;
+    text-decoration: none !important;
+}
+
+#restart-btn:hover {
+    background-color: #005a9e;
+}
+
 .container {
     width: 800px;
     background: transparent;
