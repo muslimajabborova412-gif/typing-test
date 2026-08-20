@@ -2,25 +2,50 @@
 <html lang="tg">
 <head>
     <meta charset="UTF-8">
-    <title>TypingTest</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypingTest - Олимпиадаи Суръат</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="controls-bar">
-    <select id="lang-select">
-        <option value="ru">Русский (russian)</option>
-        <option value="tg">Тоҷикӣ (tajik)</option>
-        <option value="en">English (english)</option>
-    </select>
-    <div>Normal | Advanced | <span id="time">60</span>с | 🔄 | ⚙️</div>
+    <div class="left-controls">
+        <select id="lang-select">
+            <option value="ru">Русский (russian)</option>
+            <option value="tg">Тоҷикӣ (tajik)</option>
+            <option value="en">English (english)</option>
+        </select>
+    </div>
+    <div class="right-controls">
+        <button onclick="setMode('normal')">Normal</button> | 
+        <button onclick="setMode('advanced')">Advanced</button> | 
+        <button id="time-toggle" onclick="toggleTime()">60с</button> | 
+        <button onclick="restartGame()" title="Аз нав">🔄</button> | 
+        <button onclick="openSettings()" title="Танзимот">⚙️</button>
+    </div>
 </div>
 
 <div class="container">
-    <div id="user-greeting"></div>
+    <div class="user-panel">
+        <span id="user-greeting">Хуш омадед!</span>
+        <button id="auth-action-btn" onclick="handleAuth()">Сабти ном / Ворид шудан</button>
+    </div>
+
+    <div id="timer">Вақт: <span id="time">60</span>с</div>
+
     <div class="word-display" id="word-display"></div>
-    <input type="text" id="word-input" placeholder="Барои оғоз нависед..." disabled autocomplete="off">
-    <button id="start-btn">Оғози бозӣ</button>
+
+    <input type="text" id="word-input" placeholder="Барои оғоз ин ҷо нависед..." disabled autocomplete="off">
+    
+    <div class="buttons-area">
+        <button id="start-btn" onclick="startGame()">Оғози бозӣ</button>
+        <button id="duel-btn" onclick="startDuel()" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px;">Рақобат (Дуэл бо дӯст)</button>
+    </div>
+
+    <div id="result-container" style="display: none; margin-top: 20px;">
+        <h3>Натиҷаи шумо:</h3>
+        <p id="final-score" style="font-size: 18px; color: #2c3e50;"></p>
+    </div>
 </div>
 
 <script src="script.js"></script>
