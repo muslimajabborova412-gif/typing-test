@@ -1,14 +1,7 @@
-.word-display {
-    width: 800px;
-    font-size: 28px;
-    line-height: 2;
-    background-color: #eaf4fb;
-    padding: 20px;
-    height: 150px;       /* Баландии қуттиро маҳдуд мекунем */
-    overflow-y: auto;    /* Ин параметр имкон медиҳад, ки бозигарон ба поён раванд */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #cce4f2;
-}
+body { font-family: "Courier New", Courier, monospace; background-color: #eaf4fb; color: #333; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+.controls-bar { width: 800px; display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 14px; }
+.word-display { width: 800px; height: 160px; font-size: 28px; line-height: 2; background-color: #eaf4fb; padding: 20px; overflow-y: auto; border-bottom: 2px solid #cce4f2; margin-bottom: 20px; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 10px; }
+.word-display span.current { background-color: #fce862; padding: 0 4px; border-radius: 3px; }
+.word-display span.correct { color: #2ecc71; }
+.word-display span.incorrect { color: #e74c3c; }
+#word-input { width: 800px; padding: 10px; font-size: 18px; border: 1px solid #ccc; border-radius: 4px; }
