@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FastOlimpy - Санҷиши суръати навиштан</title>
+    <!-- Ин сатр барои пайдо шудани расми хурдакак (Favicon) илова шуд -->
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -41,15 +43,12 @@
 </div>
 
 <div class="container">
-    <!-- Қисми асосии тест -->
     <div id="test-section">
         <div id="timer">Вақт: <span id="time">60</span>с</div>
-
         <div class="word-display" id="word-display"></div>
 
         <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
             <input type="text" id="word-input" placeholder="Барои оғоз ин ҷо нависед..." disabled autocomplete="off" style="flex: 1; margin-bottom: 0;">
-            
             <div class="speed-badge-box" id="speed-badge-box">
                 <span class="speed-title">СУРЪАТ</span>
                 <span id="live-wpm" class="speed-value">0</span>
@@ -75,10 +74,7 @@
         </div>
     </div>
 
-    <!-- Қисми Рейтинг бо пешсафи ҷои якум дар боло -->
     <div id="rating-section" style="display: none;">
-        
-        <!-- Блоки махсус барои Ҷои Якум -->
         <div class="champion-card">
             <div class="champ-crown">🏆 Пешсафи абсолютии сомона (Ҷои 1-ум)</div>
             <div class="champ-info">
@@ -91,83 +87,24 @@
         </div>
 
         <div class="rating-container-grid">
-            <!-- Ҷадвали якум: Рейтинг -->
             <div class="rating-box">
                 <div class="rating-header">
                     <h2>Рейтинг</h2>
                     <div class="rating-sub">🇷🇺 Russian &nbsp;|&nbsp; ⚙️ Normal</div>
                 </div>
                 <table class="rating-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Истифодабаранда</th>
-                            <th>сл/мин</th>
-                            <th>Вақт</th>
-                        </tr>
-                    </thead>
                     <tbody>
                         <tr class="highlight-first"><td>🏆</td><td><span class="avatar-ph">👩‍💻</span> 6996</td><td><strong>191</strong></td><td>10h</td></tr>
                         <tr><td>🥈</td><td><span class="avatar-ph">🤖</span> SnailBob</td><td><strong>179</strong></td><td>11h</td></tr>
-                        <tr><td>🥉</td><td><span class="avatar-ph">👽</span> Kirill46</td><td><strong>161</strong></td><td>12h</td></tr>
-                        <tr><td>4</td><td><span class="avatar-ph">💻</span> 67impala</td><td><strong>161</strong></td><td>6h</td></tr>
-                        <tr><td>5</td><td><span class="avatar-ph">🤖</span> Alexandr_Zynkovsky</td><td><strong>150</strong></td><td>18h</td></tr>
-                        <tr><td>6</td><td><span class="avatar-ph">🤖</span> Ghostface17</td><td><strong>142</strong></td><td>13h</td></tr>
-                        <tr><td>7</td><td><span class="avatar-ph">🔴</span> Wotuchw</td><td><strong>136</strong></td><td>14h</td></tr>
-                        <tr><td>8</td><td><span class="avatar-ph">🟣</span> KaraGod</td><td><strong>135</strong></td><td>23h</td></tr>
-                        <tr><td>9</td><td><span class="avatar-ph">🤖</span> Kiryadoz</td><td><strong>130</strong></td><td>7h</td></tr>
-                        <tr><td>10</td><td><span class="avatar-ph">👤</span> HaymakerPunch</td><td><strong>128</strong></td><td>7h</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Ҷадвали дуюм: Тестов пройдено -->
-            <div class="rating-box">
-                <div class="rating-header">
-                    <h2>Тестов пройдено</h2>
-                    <div class="rating-sub">📊 24427 &nbsp;|&nbsp; ⏰ 24 часа</div>
-                </div>
-                <table class="rating-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Истифодабаранда</th>
-                            <th>Иҷро шуд</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="highlight-first"><td>🏆</td><td><span class="avatar-ph">👽</span> Latteedauchi</td><td><strong>200</strong></td></tr>
-                        <tr><td>🥈</td><td><span class="avatar-ph">🐵</span> Senka_b</td><td><strong>177</strong></td></tr>
-                        <tr><td>🥉</td><td><span class="avatar-ph">🤖</span> StefanoGrossi</td><td><strong>161</strong></td></tr>
-                        <tr><td>4</td><td><span class="avatar-ph">🔴</span> AlimMuhsin</td><td><strong>139</strong></td></tr>
-                        <tr><td>5</td><td><span class="avatar-ph">🟢</span> Digital_Education</td><td><strong>134</strong></td></tr>
-                        <tr><td>6</td><td><span class="avatar-ph">🤖</span> rrrrrrrrrrrrrrrrr</td><td><strong>121</strong></td></tr>
-                        <tr><td>7</td><td><span class="avatar-ph">🤖</span> rasolofoarilala</td><td><strong>110</strong></td></tr>
-                        <tr><td>8</td><td><span class="avatar-ph">👤</span> srgjzimmer</td><td><strong>104</strong></td></tr>
-                        <tr><td>9</td><td><span class="avatar-ph">🤖</span> Typist_4575787</td><td><strong>97</strong></td></tr>
-                        <tr><td>10</td><td><span class="avatar-ph">👤</span> Teilzeitdenker</td><td><strong>94</strong></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- Қисми Маълумот бо маълумоти муфассал -->
     <div id="about-section" style="display: none; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-        <h2 style="color: #6c5ce7; margin-top: 0; font-size: 26px;">Дар бораи лоиҳаи мукаммали FastOlimpy</h2>
-        <p style="font-size: 16px; line-height: 1.6;"><strong>FastOlimpy</strong> платформаи пешсафи тоҷикӣ барои санҷиш, инкишоф ва баланд бардоштани суръати навиштан дар клавиатураи компютер мебошад. Ин лоиҳа бо мақсади рушди маҳорати барномасозон, хонандагон ва ҳаводорони коди тоза сохта шудааст.</p>
-        
-        <h3 style="color: #2d3436; margin-top: 25px;">Хусусиятҳои асосии сомона:</h3>
-        <ul style="font-size: 15px; line-height: 1.8; color: #555;">
-            <li><strong>Санҷиши суръат (WPM):</strong> Имкони санҷидани шумораи калимаҳо дар як дақиқа бо забонҳои русӣ, англисӣ ва тоҷикӣ.</li>
-            <li><strong>Нишондиҳандаи ранга:</strong> Калимаҳои дуруст навишташуда бо ранги сабз ва хатошуда бо ранги сурх муайян карда мешаванд.</li>
-            <li><strong>Скролли худкор:</strong> Ҳангоми гузаштан ба сатрҳои дигар, саҳифа худаш ба поён меғелонад ва муш лозим намешавад.</li>
-            <li><strong>Режими рақобат (Дуэл):</strong> Имконияти муборизаи суръат бо дӯстон ва ҳамкорон дар вақти воқеӣ.</li>
-            <li><strong>Рейтинги ҷаҳонӣ:</strong> Нишон додани беҳтарин натиҷаҳои истифодабарандагон дар ҷадвалҳои махсус.</li>
-        </ul>
-
-        <h3 style="color: #2d3436; margin-top: 25px;">Муаллиф ва таҳиягар:</h3>
-        <p style="font-size: 16px; line-height: 1.6;">Лоиҳаи мазкур аз тарафи барномасоз ва хонандаи фаъол <strong>Шералиев Абдураҳим</strong> тарҳрезӣ ва таҳия шудааст. Ҳадаф — офаридани муҳити қулай ва муосир барои насли нави тоҷик аст.</p>
+        <h2 style="color: #6c5ce7; margin-top: 0; font-size: 26px;">Дар бораи лоиҳаи FastOlimpy</h2>
+        <p>Муаллиф: <strong>Шералиев Абдураҳим</strong></p>
     </div>
 </div>
 
