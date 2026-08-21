@@ -28,21 +28,27 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function switchTab(tab) {
     const testSection = document.getElementById('test-section');
+    const ratingSection = document.getElementById('rating-section');
     const aboutSection = document.getElementById('about-section');
     const controlsBar = document.getElementById('controls-bar');
     const buttons = document.querySelectorAll('.nav-btn');
     
     buttons.forEach(btn => btn.classList.remove('active'));
 
+    testSection.style.display = 'none';
+    ratingSection.style.display = 'none';
+    aboutSection.style.display = 'none';
+    controlsBar.style.display = 'none';
+
     if (tab === 'test') {
         testSection.style.display = 'block';
-        aboutSection.style.display = 'none';
         controlsBar.style.display = 'flex';
         event.target.classList.add('active');
+    } else if (tab === 'rating') {
+        ratingSection.style.display = 'block';
+        event.target.classList.add('active');
     } else if (tab === 'about') {
-        testSection.style.display = 'none';
         aboutSection.style.display = 'block';
-        controlsBar.style.display = 'none';
         event.target.classList.add('active');
     }
 }
@@ -68,7 +74,6 @@ function renderWords() {
         wordDisplay.appendChild(span);
     });
     
-    // Скролли худкор ба сатри калимаи ҳозира
     const currentSpan = wordDisplay.querySelector('.current');
     if (currentSpan) {
         wordDisplay.scrollTop = currentSpan.offsetTop - wordDisplay.offsetTop - 10;
@@ -169,26 +174,27 @@ function handleAuth() {
 wordInput.addEventListener('input', (e) => {
     if (!isPlaying) return;
 
-    // Ҳангоми пахш кардани Space калима санҷида мешавад
-    if (e.target.value.endsWith(' ')) {
-        const typed = e.target.value.trim();
-        const spans = wordDisplay.children;
+    const typedValue = e.target.value;
+    const spans = wordDisplay.children;
+    const currentWord = words[currentWordIndex];
+
+    if (typedValue.endsWith(' ')) {
+        const typedTrimmed = typedValue.trim();
         
         if (spans[currentWordIndex]) {
-            if (typed === words[currentWordIndex]) {
-                spans[currentWordIndex].classList.remove('current', 'incorrect');
-                spans[currentWordIndex].classList.add('correct'); // Сабз
+            spans[currentWordIndex].classList.remove('current');
+            if (typedTrimmed === currentWord) {
+                spans[currentWordIndex].classList.add('correct');
                 correctCount++;
             } else {
-                spans[currentWordIndex].classList.remove('current');
-                spans[currentWordIndex].classList.add('incorrect'); // Сурх
+                spans[currentWordIndex].classList.add('incorrect');
                 incorrectCount++;
-                wrongCharsCount += Math.abs(typed.length - words[currentWordIndex].length);
+                wrongCharsCount += Math.abs(typedTrimmed.length - currentWord.length);
             }
         }
 
         currentWordIndex++;
-        e.target.value = ''; // Тоза кардани input барои калимаи навбатӣ
+        e.target.value = '';
         
         if (currentWordIndex >= words.length) {
             clearInterval(timerInterval);
@@ -196,7 +202,18 @@ wordInput.addEventListener('input', (e) => {
             return;
         }
         
-        renderWords(); // Гузариш ба сатри навбатӣ ва скролл
+        if (spans[currentWordIndex]) {
+            spans[currentWordIndex].classList.add('current');
+        }
+        renderWords();
+    } else {
+        if (spans[currentWordIndex]) {
+            if (currentWord.startsWith(typedValue.trim())) {
+                spans[currentWordIndex].style.color = "#2c3e50";
+            } else {
+                spans[currentWordIndex].style.color = "#e74c3c";
+            }
+        }
     }
 });
 
