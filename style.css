@@ -127,19 +127,17 @@ body {
     border-radius: 3px;
 }
 
-/* Калимаи ҷорӣ (Зард) */
 .word-display span.current {
     background-color: #f1c40f;
     color: #2c3e50;
 }
 
-/* Калимаи хато кардашуда (Сурх) */
 .word-display span.incorrect {
-    background-color: #e74c3c !important;
-    color: white !important;
+    color: #e74c3c !important;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
-/* Калимаи дуруст навишташуда (Сабз) */
 .word-display span.correct {
     color: #27ae60 !important;
 }
@@ -196,4 +194,100 @@ body {
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+}
+
+/* Услубҳои қисми Рейтинг ва Ҷои якум */
+.champion-card {
+    background: linear-gradient(135deg, #f39c12, #f1c40f);
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+
+.champ-crown {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.champ-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.champ-avatar {
+    font-size: 36px;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.champ-name {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.champ-stats {
+    font-size: 14px;
+    opacity: 0.95;
+    margin-top: 3px;
+}
+
+.rating-container-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.rating-box {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.rating-header h2 {
+    margin: 0 0 5px 0;
+    font-size: 20px;
+    color: #2d3436;
+    text-align: center;
+}
+
+.rating-sub {
+    text-align: center;
+    font-size: 13px;
+    color: #718093;
+    margin-bottom: 15px;
+}
+
+.rating-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.rating-table th, .rating-table td {
+    padding: 10px 8px;
+    text-align: left;
+    border-bottom: 1px solid #f1f2f6;
+}
+
+.rating-table th {
+    color: #718093;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.highlight-first {
+    background-color: #fffdf0;
+    font-weight: bold;
+}
+
+.avatar-ph {
+    margin-right: 5px;
 }
