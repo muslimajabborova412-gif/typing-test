@@ -1,7 +1,7 @@
 const wordsData = {
-    tg: ["китоб", "мактаб", "барнома", "хона", "мошин", "дунё", "вақт", "кор", "дарс", "хонанда", "дониш", "компютер", "забон", "тез", "навиштан", "суръат", "ҷаҳон", "олам", "ҷвон", "дӯст"],
-    ru: ["лицо", "ребенок", "самый", "казаться", "любить", "почему", "вода", "бы", "жена", "страна", "дверь", "ничто", "очень", "свое", "даже", "время", "человек", "дело", "жизнь", "день", "пока", "другой", "когда", "через", "видеть"],
-    en: ["time", "person", "year", "way", "day", "thing", "man", "world", "life", "hand", "part", "child", "eye", "woman", "place", "work", "week", "case", "point", "government"]
+    tg: ["китоб", "мактаб", "барнома", "хона", "мошин", "дунё", "вақт", "кор", "дарс", "хонанда", "дониш", "компютер", "забон", "тез", "навиштан", "суръат", "ҷаҳон", "олам", "ҷвон", "дӯст", "шаҳр", "баҳор", "тобистон", "дарё", "кӯҳ", "ватан"],
+    ru: ["лицо", "ребенок", "самый", "казаться", "любить", "почему", "вода", "бы", "жена", "страна", "дверь", "ничто", "очень", "свое", "даже", "время", "человек", "дело", "жизнь", "день", "пока", "другой", "когда", "через", "видеть", "главный", "нога", "рука", "конец"],
+    en: ["time", "person", "year", "way", "day", "thing", "man", "world", "life", "hand", "part", "child", "eye", "woman", "place", "work", "week", "case", "point", "government", "company", "number", "group", "problem"]
 };
 
 let words = [];
@@ -50,7 +50,7 @@ function switchTab(tab) {
 function generateWords() {
     words = [];
     const base = wordsData[currentLang];
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 300; i++) {
         words.push(base[Math.floor(Math.random() * base.length)]);
     }
     currentWordIndex = 0;
@@ -64,10 +64,15 @@ function renderWords() {
         span.textContent = w;
         if (i === currentWordIndex) {
             span.classList.add('current');
-            span.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         wordDisplay.appendChild(span);
     });
+    
+    // Скролли худкор ба сатри калимаи ҳозира
+    const currentSpan = wordDisplay.querySelector('.current');
+    if (currentSpan) {
+        wordDisplay.scrollTop = currentSpan.offsetTop - wordDisplay.offsetTop - 10;
+    }
 }
 
 document.getElementById('lang-select').addEventListener('change', (e) => {
@@ -126,7 +131,6 @@ function startGame() {
         timeLeft--;
         timeDisplay.textContent = timeLeft;
         
-        // Ҳисобкунии суръати мустақим (WPM) дар вақти бозӣ
         const elapsedMinutes = (timeLimit - timeLeft) / 60;
         if (elapsedMinutes > 0) {
             const currentWpm = Math.round(correctCount / elapsedMinutes);
@@ -165,23 +169,26 @@ function handleAuth() {
 wordInput.addEventListener('input', (e) => {
     if (!isPlaying) return;
 
+    // Ҳангоми пахш кардани Space калима санҷида мешавад
     if (e.target.value.endsWith(' ')) {
         const typed = e.target.value.trim();
         const spans = wordDisplay.children;
         
         if (spans[currentWordIndex]) {
             if (typed === words[currentWordIndex]) {
-                spans[currentWordIndex].classList.add('correct');
+                spans[currentWordIndex].classList.remove('current', 'incorrect');
+                spans[currentWordIndex].classList.add('correct'); // Сабз
                 correctCount++;
             } else {
-                spans[currentWordIndex].classList.add('incorrect');
+                spans[currentWordIndex].classList.remove('current');
+                spans[currentWordIndex].classList.add('incorrect'); // Сурх
                 incorrectCount++;
                 wrongCharsCount += Math.abs(typed.length - words[currentWordIndex].length);
             }
         }
 
         currentWordIndex++;
-        e.target.value = '';
+        e.target.value = ''; // Тоза кардани input барои калимаи навбатӣ
         
         if (currentWordIndex >= words.length) {
             clearInterval(timerInterval);
@@ -189,7 +196,7 @@ wordInput.addEventListener('input', (e) => {
             return;
         }
         
-        renderWords();
+        renderWords(); // Гузариш ба сатри навбатӣ ва скролл
     }
 });
 
